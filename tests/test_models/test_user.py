@@ -4,7 +4,7 @@
 import os
 import models
 import unittest
-from models.base_model import BaseModel
+from models.user import User
 from models.engine.file_storage import FileStorage
 
 
@@ -23,8 +23,8 @@ class Test_User(unittest.TestCase):
         """Tests to dictionary."""
         self.assertTrue(dict, type(User().to_dict()))
 
-    def test_save_with_arg(self):
-        u?"""Tests for save."""
+    def st_save(self):
+        """Tests for save."""
         with self.assertRaises(TypeError):
             User().save(None)
 
@@ -34,11 +34,23 @@ class Test_User(unittest.TestCase):
 
     def test_types(self):
         """Test for types."""
-        u = User()
-        self.assertEqual(type(u.id), str)
-        self.assertEqual(type(u.email), str)
-        self.assertEqual(type(u.password), str)
-        self.assertEqual(type(u.first_name), str)
-        self.assertEqual(type(u.last_name), str)
-        self.assertEqual(u.created_at.__class__.__name__, "datetime")
-        self.assertEqual(u.updated_at.__class__.__name__, "datetime")
+        self.assertEqual(type(User().id), str)
+        self.assertEqual(type(User().email), str)
+        self.assertEqual(type(User().password), str)
+        self.assertEqual(type(User().first_name), str)
+        self.assertEqual(type(User().last_name), str)
+        self.assertEqual(User().created_at.__class__.__name__, "datetime")
+        self.assertEqual(User().updated_at.__class__.__name__, "datetime")
+
+    def test_executable(self):
+        """tests for executable permissions."""
+        is_read_true = os.access('models/engine/file_storage.py', os.R_OK)
+        self.assertTrue(is_read_true)
+        is_write_true = os.access('models/engine/file_storage.py', os.W_OK)
+        self.assertTrue(is_write_true)
+        is_exec_true = os.access('models/engine/file_storage.py', os.X_OK)
+        self.assertTrue(is_exec_true)
+
+
+if __name__ == '__main__':
+    unittest.main()
